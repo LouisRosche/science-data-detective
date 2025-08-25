@@ -32,6 +32,13 @@
         .glossary-link { cursor: pointer; color: #4f46e5; font-weight: 600; display: inline-block; margin-left: 4px; }
         .discovery-card { animation: slideIn 0.5s ease-out forwards; }
         @keyframes slideIn { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
+                .team-selector { animation: slideDown 0.5s ease-out; }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        .step-guidance { animation: fadeIn 0.3s ease-in; }
+        .hint-btn { transition: all 0.3s ease; }
+        .hint-btn:hover { transform: scale(1.05); }
+        .ngss-indicator { animation: slideInRight 0.3s ease-out; }
+        @keyframes slideInRight { from { transform: translateX(100px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
     </style>
 </head>
 <body class="antialiased text-slate-800">
@@ -111,6 +118,26 @@
             { "id": 1, "emotional": 2, "physical": 3, "intellectual": 4, "social": 5, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 3, "management": 5, "awareness": 5, "learning_style": "Visual", "group_role": "Creator" }, { "id": 2, "emotional": 5, "physical": 5, "intellectual": 5, "social": 5, "wonder": 5, "environmental": 5, "purpose": 5, "resource": 5, "growth": 5, "persistence": 5, "confidence": 5, "management": 5, "awareness": 5, "learning_style": "Auditory", "group_role": "Leader" }, { "id": 3, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Kinesthetic", "group_role": "Organizer" }, { "id": 4, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Reading/Writing", "group_role": "Researcher" }, { "id": 5, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Visual", "group_role": "Creator" }, { "id": 6, "emotional": 4, "physical": 5, "intellectual": 4, "social": 5, "wonder": 5, "environmental": 4, "purpose": 5, "resource": 4, "growth": 5, "persistence": 5, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Auditory", "group_role": "Leader" }, { "id": 7, "emotional": 4, "physical": 5, "intellectual": 5, "social": 5, "wonder": 5, "environmental": 5, "purpose": 5, "resource": 5, "growth": 5, "persistence": 5, "confidence": 5, "management": 5, "awareness": 5, "learning_style": "Kinesthetic", "group_role": "Organizer" }, { "id": 8, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Reading/Writing", "group_role": "Researcher" }, { "id": 9, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Visual", "group_role": "Creator" }, { "id": 10, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Auditory", "group_role": "Leader" }, { "id": 11, "emotional": 4, "physical": 5, "intellectual": 4, "social": 5, "wonder": 5, "environmental": 4, "purpose": 5, "resource": 4, "growth": 5, "persistence": 5, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Kinesthetic", "group_role": "Organizer" }, { "id": 12, "emotional": 4, "physical": 5, "intellectual": 5, "social": 5, "wonder": 5, "environmental": 5, "purpose": 5, "resource": 5, "growth": 5, "persistence": 5, "confidence": 5, "management": 5, "awareness": 5, "learning_style": "Reading/Writing", "group_role": "Researcher" }, { "id": 13, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Visual", "group_role": "Creator" }, { "id": 14, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Auditory", "group_role": "Leader" }, { "id": 15, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Kinesthetic", "group_role": "Organizer" }, { "id": 16, "emotional": 4, "physical": 5, "intellectual": 4, "social": 5, "wonder": 5, "environmental": 4, "purpose": 5, "resource": 4, "growth": 5, "persistence": 5, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Reading/Writing", "group_role": "Researcher" }, { "id": 17, "emotional": 4, "physical": 5, "intellectual": 5, "social": 5, "wonder": 5, "environmental": 5, "purpose": 5, "resource": 5, "growth": 5, "persistence": 5, "confidence": 5, "management": 5, "awareness": 5, "learning_style": "Visual", "group_role": "Creator" }, { "id": 18, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Auditory", "group_role": "Leader" }, { "id": 19, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Kinesthetic", "group_role": "Organizer" }, { "id": 20, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Reading/Writing", "group_role": "Researcher" }, { "id": 21, "emotional": 4, "physical": 5, "intellectual": 4, "social": 5, "wonder": 5, "environmental": 4, "purpose": 5, "resource": 4, "growth": 5, "persistence": 5, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Visual", "group_role": "Creator" }, { "id": 22, "emotional": 4, "physical": 5, "intellectual": 5, "social": 5, "wonder": 5, "environmental": 5, "purpose": 5, "resource": 5, "growth": 5, "persistence": 5, "confidence": 5, "management": 5, "awareness": 5, "learning_style": "Auditory", "group_role": "Leader" }, { "id": 23, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Kinesthetic", "group_role": "Organizer" }, { "id": 24, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Reading/Writing", "group_role": "Researcher" }, { "id": 25, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Visual", "group_role": "Creator" }, { "id": 26, "emotional": 4, "physical": 5, "intellectual": 4, "social": 5, "wonder": 5, "environmental": 4, "purpose": 5, "resource": 4, "growth": 5, "persistence": 5, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Auditory", "group_role": "Leader" }, { "id": 27, "emotional": 4, "physical": 5, "intellectual": 5, "social": 5, "wonder": 5, "environmental": 5, "purpose": 5, "resource": 5, "growth": 5, "persistence": 5, "confidence": 5, "management": 5, "awareness": 5, "learning_style": "Kinesthetic", "group_role": "Organizer" }, { "id": 28, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Reading/Writing", "group_role": "Researcher" }, { "id": 29, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Visual", "group_role": "Creator" }, { "id": 30, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Auditory", "group_role": "Leader" }, { "id": 31, "emotional": 4, "physical": 5, "intellectual": 4, "social": 5, "wonder": 5, "environmental": 4, "purpose": 5, "resource": 4, "growth": 5, "persistence": 5, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Kinesthetic", "group_role": "Organizer" }, { "id": 32, "emotional": 4, "physical": 5, "intellectual": 5, "social": 5, "wonder": 5, "environmental": 5, "purpose": 5, "resource": 5, "growth": 5, "persistence": 5, "confidence": 5, "management": 5, "awareness": 5, "learning_style": "Reading/Writing", "group_role": "Researcher" }, { "id": 33, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Visual", "group_role": "Creator" }, { "id": 34, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Auditory", "group_role": "Leader" }, { "id": 35, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Kinesthetic", "group_role": "Organizer" }, { "id": 36, "emotional": 4, "physical": 5, "intellectual": 4, "social": 5, "wonder": 5, "environmental": 4, "purpose": 5, "resource": 4, "growth": 5, "persistence": 5, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Reading/Writing", "group_role": "Researcher" }, { "id": 37, "emotional": 4, "physical": 5, "intellectual": 5, "social": 5, "wonder": 5, "environmental": 5, "purpose": 5, "resource": 5, "growth": 5, "persistence": 5, "confidence": 5, "management": 5, "awareness": 5, "learning_style": "Visual", "group_role": "Creator" }, { "id": 38, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Auditory", "group_role": "Leader" }, { "id": 39, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Kinesthetic", "group_role": "Organizer" }, { "id": 40, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Reading/Writing", "group_role": "Researcher" }, { "id": 41, "emotional": 4, "physical": 5, "intellectual": 4, "social": 5, "wonder": 5, "environmental": 4, "purpose": 5, "resource": 4, "growth": 5, "persistence": 5, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Visual", "group_role": "Creator" }, { "id": 42, "emotional": 4, "physical": 5, "intellectual": 5, "social": 5, "wonder": 5, "environmental": 5, "purpose": 5, "resource": 5, "growth": 5, "persistence": 5, "confidence": 5, "management": 5, "awareness": 5, "learning_style": "Auditory", "group_role": "Leader" }, { "id": 43, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Kinesthetic", "group_role": "Organizer" }, { "id": 44, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Reading/Writing", "group_role": "Researcher" }, { "id": 45, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Visual", "group_role": "Creator" }, { "id": 46, "emotional": 4, "physical": 5, "intellectual": 4, "social": 5, "wonder": 5, "environmental": 4, "purpose": 5, "resource": 4, "growth": 5, "persistence": 5, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Auditory", "group_role": "Leader" }, { "id": 47, "emotional": 4, "physical": 5, "intellectual": 5, "social": 5, "wonder": 5, "environmental": 5, "purpose": 5, "resource": 5, "growth": 5, "persistence": 5, "confidence": 5, "management": 5, "awareness": 5, "learning_style": "Kinesthetic", "group_role": "Organizer" }, { "id": 48, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Reading/Writing", "group_role": "Researcher" }, { "id": 49, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Visual", "group_role": "Creator" }, { "id": 50, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Auditory", "group_role": "Leader" }, { "id": 51, "emotional": 4, "physical": 5, "intellectual": 4, "social": 5, "wonder": 5, "environmental": 4, "purpose": 5, "resource": 4, "growth": 5, "persistence": 5, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Kinesthetic", "group_role": "Organizer" }, { "id": 52, "emotional": 4, "physical": 5, "intellectual": 5, "social": 5, "wonder": 5, "environmental": 5, "purpose": 5, "resource": 5, "growth": 5, "persistence": 5, "confidence": 5, "management": 5, "awareness": 5, "learning_style": "Reading/Writing", "group_role": "Researcher" }, { "id": 53, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Visual", "group_role": "Creator" }, { "id": 54, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Auditory", "group_role": "Leader" }, { "id": 55, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Kinesthetic", "group_role": "Organizer" }, { "id": 56, "emotional": 4, "physical": 5, "intellectual": 4, "social": 5, "wonder": 5, "environmental": 4, "purpose": 5, "resource": 4, "growth": 5, "persistence": 5, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Reading/Writing", "group_role": "Researcher" }, { "id": 57, "emotional": 4, "physical": 5, "intellectual": 5, "social": 5, "wonder": 5, "environmental": 5, "purpose": 5, "resource": 5, "growth": 5, "persistence": 5, "confidence": 5, "management": 5, "awareness": 5, "learning_style": "Visual", "group_role": "Creator" }, { "id": 58, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Auditory", "group_role": "Leader" }, { "id": 59, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Kinesthetic", "group_role": "Organizer" }, { "id": 60, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Reading/Writing", "group_role": "Researcher" }, { "id": 61, "emotional": 4, "physical": 5, "intellectual": 4, "social": 5, "wonder": 5, "environmental": 4, "purpose": 5, "resource": 4, "growth": 5, "persistence": 5, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Visual", "group_role": "Creator" }, { "id": 62, "emotional": 4, "physical": 5, "intellectual": 5, "social": 5, "wonder": 5, "environmental": 5, "purpose": 5, "resource": 5, "growth": 5, "persistence": 5, "confidence": 5, "management": 5, "awareness": 5, "learning_style": "Auditory", "group_role": "Leader" }, { "id": 63, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Kinesthetic", "group_role": "Organizer" }, { "id": 64, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Reading/Writing", "group_role": "Researcher" }, { "id": 65, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Visual", "group_role": "Creator" }, { "id": 66, "emotional": 4, "physical": 5, "intellectual": 4, "social": 5, "wonder": 5, "environmental": 4, "purpose": 5, "resource": 4, "growth": 5, "persistence": 5, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Auditory", "group_role": "Leader" }, { "id": 67, "emotional": 4, "physical": 5, "intellectual": 5, "social": 5, "wonder": 5, "environmental": 5, "purpose": 5, "resource": 5, "growth": 5, "persistence": 5, "confidence": 5, "management": 5, "awareness": 5, "learning_style": "Kinesthetic", "group_role": "Organizer" }, { "id": 68, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Reading/Writing", "group_role": "Researcher" }, { "id": 69, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Visual", "group_role": "Creator" }, { "id": 70, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Auditory", "group_role": "Leader" }, { "id": 71, "emotional": 4, "physical": 5, "intellectual": 4, "social": 5, "wonder": 5, "environmental": 4, "purpose": 5, "resource": 4, "growth": 5, "persistence": 5, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Kinesthetic", "group_role": "Organizer" }, { "id": 72, "emotional": 4, "physical": 5, "intellectual": 5, "social": 5, "wonder": 5, "environmental": 5, "purpose": 5, "resource": 5, "growth": 5, "persistence": 5, "confidence": 5, "management": 5, "awareness": 5, "learning_style": "Reading/Writing", "group_role": "Researcher" }
         ];
         const wellnessFields = { emotional: "😊 Emotional Wellness", physical: "💪 Physical Wellness", intellectual: "🧠 Intellectual Wellness", social: "👥 Social Wellness", wonder: "✨ Sense of Wonder", environmental: "🌍 Environmental Awareness", purpose: "🎯 Purpose & Contribution", resource: "📦 Resource Management", growth: "📈 Growth Mindset", persistence: "💫 Persistence", confidence: "💪 Self-Confidence", management: "⚡ Self-Management", awareness: "👁️ Social Awareness" };
+        const readingSupport = {
+    definitions: {
+        correlation: "How strongly two things are connected or related",
+        scatter: "Dots on a graph that show if two things are related", 
+        variable: "Something that can change or be different",
+        pattern: "When things happen in a regular or predictable way",
+        average: "The typical or middle value when you add up all numbers and divide"
+    },
+    
+    addTooltips: function() {
+        document.querySelectorAll('[data-term]').forEach(element => {
+            const term = element.getAttribute('data-term');
+            if(this.definitions[term]) {
+                element.title = this.definitions[term];
+                element.style.cursor = 'help';
+                element.style.borderBottom = '1px dotted #4f46e5';
+            }
+        });
+    }
+};
         const categoricalFields = { learning_style: "🎓 Learning Style", group_role: "🤝 Group Role" };
 
         // --- STATE MANAGEMENT ---
@@ -118,7 +145,263 @@
             currentLevel: 1, unlockedLevels: [1], patternsFound: 0, questionsAsked: 0, discoveriesMade: 0,
             charts: {}, lastCorrelation: null, currentChallenge: 0, userId: null, db: null
         };
+        const collaboration = {
+    teamMode: false,
+    currentTeam: null,
+    
+    enableTeamMode: function() {
+        this.teamMode = true;
+        const teamSelector = document.createElement('div');
+        teamSelector.className = 'team-selector bg-amber-50 p-4 rounded-lg mb-4';
+        teamSelector.innerHTML = `
+            <h4 class="font-bold mb-2">🤝 Team Mode Active</h4>
+            <select id="teamSelect" class="p-2 rounded border">
+                <option value="">Select Your Team</option>
+                <option value="team1">Team 1: Data Discoverers</option>
+                <option value="team2">Team 2: Pattern Hunters</option>
+                <option value="team3">Team 3: Question Creators</option>
+                <option value="team4">Team 4: Graph Masters</option>
+                <option value="team5">Team 5: Insight Investigators</option>
+                <option value="team6">Team 6: Evidence Explorers</option>
+            </select>
+            <button onclick="collaboration.joinTeam()" class="ml-2 bg-indigo-600 text-white px-4 py-2 rounded">Join Team</button>
+        `;
+        
+        document.querySelector('header').after(teamSelector);
+    },
+    
+    joinTeam: function() {
+        const teamId = document.getElementById('teamSelect').value;
+        if(teamId) {
+            this.currentTeam = teamId;
+            document.getElementById('userId').textContent = `${state.userId.substring(0, 4)} (${teamId})`;
+            this.showTeamChallenge();
+        }
+    },
+    
+    showTeamChallenge: function() {
+        const challengeCard = document.createElement('div');
+        challengeCard.className = 'team-challenge bg-green-50 border-l-4 border-green-500 p-4 rounded-r-lg mb-4';
+        challengeCard.innerHTML = `
+            <h4 class="font-bold text-green-800">🎯 Team Challenge</h4>
+            <p class="text-green-700">Work together to find 3 different patterns in the data. Each team member should contribute at least one discovery!</p>
+            <div class="mt-2">
+                <span class="bg-green-200 text-green-800 px-2 py-1 rounded text-sm">Target: 3 discoveries per team</span>
+            </div>
+        `;
+        
+        document.querySelector('.level-content.active').prepend(challengeCard);
+    }
+};
 
+const ngssAlignment = {
+    standards: {
+        '7.1': ['7-MS-ETS1-1', '7-MS-ETS1-2', '7-MS-ETS1-3'],
+        '8.1': ['8-MS-ETS1-1', '8-MS-ETS1-2', '8-MS-ETS1-3']
+    },
+    
+    trackProgress: function(standardId, action) {
+        console.log(`NGSS Standard ${standardId}: ${action} completed by ${state.userId}`);
+        
+        const indicator = document.createElement('div');
+        indicator.className = 'ngss-indicator fixed top-4 right-20 bg-green-500 text-white px-3 py-1 rounded-full text-xs z-50';
+        indicator.innerHTML = `✓ ${standardId}`;
+        document.body.appendChild(indicator);
+        
+        setTimeout(() => indicator.remove(), 3000);
+    }
+};
+
+const differentiation = {
+    supportLevels: {
+        emerging: { hints: 3, examples: true, stepByStep: true },
+        developing: { hints: 2, examples: true, stepByStep: false },
+        proficient: { hints: 1, examples: false, stepByStep: false },
+        advanced: { hints: 0, examples: false, stepByStep: false }
+    },
+    
+    currentLevel: 'developing',
+    
+    addSupport: function(level) {
+        this.currentLevel = level;
+        this.updateUI();
+    },
+    
+    updateUI: function() {
+        const support = this.supportLevels[this.currentLevel];
+        
+        if(support.stepByStep) {
+            this.addStepByStepGuidance();
+        }
+        
+        if(support.examples) {
+            this.addExamples();
+        }
+        
+        if(support.hints > 0) {
+            this.addHintSystem(support.hints);
+        }
+    },
+    
+    addStepByStepGuidance: function() {
+        const guidance = document.createElement('div');
+        guidance.className = 'step-guidance bg-blue-50 border border-blue-200 p-4 rounded-lg mb-4';
+        guidance.innerHTML = `
+            <h4 class="font-bold text-blue-800 mb-2">📋 Step-by-Step Guide</h4>
+            <ol class="list-decimal list-inside text-blue-700 space-y-1">
+                <li>Look at the graph carefully</li>
+                <li>Notice if dots go up, down, or stay scattered</li>
+                <li>Think about what this pattern might mean</li>
+                <li>Choose your answer based on what you see</li>
+            </ol>
+        `;
+        
+        const activeContent = document.querySelector('.level-content.active');
+        if(activeContent && !activeContent.querySelector('.step-guidance')) {
+            activeContent.prepend(guidance);
+        }
+    },
+    
+    addHintSystem: function(maxHints) {
+        if(document.querySelector('.hint-btn')) return; // Don't add if already exists
+        
+        const hintButton = document.createElement('button');
+        hintButton.className = 'hint-btn bg-yellow-500 text-white px-3 py-1 rounded-full text-sm fixed bottom-4 right-4 z-50';
+        hintButton.innerHTML = `💡 Hint (${maxHints} left)`;
+        hintButton.onclick = () => this.showHint(maxHints);
+        document.body.appendChild(hintButton);
+    },
+    
+    showHint: function(hintsLeft) {
+        const hints = [
+            "Look for dots that form a line going up or down",
+            "If dots are scattered randomly, there might be no pattern",
+            "Strong relationships have dots close to an imaginary line"
+        ];
+        
+        if(hintsLeft > 0) {
+            showInfoModal("💡 Hint", hints[3-hintsLeft]);
+            hintsLeft--;
+            const hintBtn = document.querySelector('.hint-btn');
+            if(hintBtn) {
+                hintBtn.innerHTML = `💡 Hint (${hintsLeft} left)`;
+                if(hintsLeft === 0) {
+                    hintBtn.style.display = 'none';
+                }
+            }
+        }
+    }
+};
+
+const assessment = {
+    data: {
+        interactions: [],
+        correctAnswers: 0,
+        totalAttempts: 0,
+        timeSpent: {},
+        conceptualUnderstanding: {}
+    },
+    
+    startTime: Date.now(),
+    
+    trackInteraction: function(type, details) {
+        this.data.interactions.push({
+            timestamp: Date.now(),
+            type: type,
+            details: details,
+            userId: state.userId,
+            level: state.currentLevel
+        });
+    },
+    
+    trackAnswer: function(question, answer, correct) {
+        this.data.totalAttempts++;
+        if(correct) this.data.correctAnswers++;
+        
+        this.trackInteraction('answer', {
+            question: question,
+            answer: answer,
+            correct: correct
+        });
+    },
+    
+    generateReport: function() {
+        const report = {
+            userId: state.userId,
+            sessionDuration: Date.now() - this.startTime,
+            accuracy: this.data.totalAttempts > 0 ? (this.data.correctAnswers / this.data.totalAttempts * 100).toFixed(1) : 0,
+            levelsCompleted: state.unlockedLevels.length,
+            totalInteractions: this.data.interactions.length,
+            patternsFound: state.patternsFound,
+            questionsAsked: state.questionsAsked,
+            discoveriesMade: state.discoveriesMade
+        };
+        
+        console.log('Student Assessment Report:', report);
+        return report;
+    }
+};
+
+const gamification = {
+    badges: {
+        firstGraph: { name: "Graph Creator", icon: "📊", earned: false },
+        patternHunter: { name: "Pattern Hunter", icon: "🔍", earned: false },
+        questionMaster: { name: "Question Master", icon: "❓", earned: false },
+        collaborator: { name: "Team Player", icon: "🤝", earned: false },
+        dataDetective: { name: "Data Detective", icon: "🕵️", earned: false }
+    },
+    
+    checkBadges: function() {
+        if(state.patternsFound >= 1 && !this.badges.firstGraph.earned) {
+            this.awardBadge('firstGraph');
+        }
+        
+        if(state.patternsFound >= 3 && !this.badges.patternHunter.earned) {
+            this.awardBadge('patternHunter');
+        }
+        
+        if(state.questionsAsked >= 1 && !this.badges.questionMaster.earned) {
+            this.awardBadge('questionMaster');
+        }
+        
+        if(state.discoveriesMade >= 1 && !this.badges.dataDetective.earned) {
+            this.awardBadge('dataDetective');
+        }
+        
+        if(collaboration.currentTeam && !this.badges.collaborator.earned) {
+            this.awardBadge('collaborator');
+        }
+    },
+    
+    awardBadge: function(badgeId) {
+        this.badges[badgeId].earned = true;
+        const badge = this.badges[badgeId];
+        
+        showAchievement(`${badge.icon} Badge Earned!`, `You earned the "${badge.name}" badge!`);
+        this.updateBadgeDisplay();
+    },
+    
+    updateBadgeDisplay: function() {
+        let badgeContainer = document.getElementById('badgeContainer');
+        if(!badgeContainer) {
+            badgeContainer = document.createElement('div');
+            badgeContainer.id = 'badgeContainer';
+            badgeContainer.className = 'fixed top-20 right-4 space-y-1 z-40';
+            document.body.appendChild(badgeContainer);
+        }
+        
+        badgeContainer.innerHTML = '';
+        Object.entries(this.badges).forEach(([id, badge]) => {
+            if(badge.earned) {
+                const badgeEl = document.createElement('div');
+                badgeEl.className = 'bg-yellow-100 border border-yellow-300 rounded-full p-2 text-xl';
+                badgeEl.title = badge.name;
+                badgeEl.innerHTML = badge.icon;
+                badgeContainer.appendChild(badgeEl);
+            }
+        });
+    }
+};
         // --- CHALLENGES ---
         const challenges = [
             { id: 0, question: "Which learning style reports the highest average 'Sense of Wonder'?", x: 'learning_style', y: 'wonder', type: 'bar' },
@@ -202,6 +485,24 @@
             setupEventListeners();
             updateUI();
             document.getElementById('stat1').innerText = wellnessData.length;
+
+setTimeout(() => {
+    readingSupport.addTooltips();
+    differentiation.addSupport('developing'); // Default level
+    gamification.updateBadgeDisplay();
+    
+    // Add team mode button to header
+    const teamButton = document.createElement('button');
+    teamButton.className = 'w-12 h-12 bg-white/20 rounded-full flex items-center justify-center text-2xl hover:bg-white/30 ml-2';
+    teamButton.innerHTML = '👥';
+    teamButton.title = 'Enable Team Mode';
+    teamButton.onclick = () => collaboration.enableTeamMode();
+    
+    const headerButtons = document.querySelector('header .flex.gap-2');
+    if(headerButtons) {
+        headerButtons.appendChild(teamButton);
+    }
+}, 1000);
             
             // Start Authentication
             initializeAuth();
@@ -221,6 +522,8 @@
         window.showHelpModal = showHelpModal;
         window.showGlossaryModal = showGlossaryModal;
         window.closeModal = closeModal;
+        window.showAchievement = showAchievement;
+        window.showInfoModal = showInfoModal;
 
 
         function populateSelects() {
@@ -308,45 +611,50 @@
             state.charts[canvasId] = new Chart(ctx, config);
         }
 
-        function exploreBasicData() {
-            const selection = document.getElementById('wellness1').value;
-            let chartConfig;
+function exploreBasicData() {
+    assessment.trackInteraction('explore', { type: 'basic_data' });
+    
+    const selection = document.getElementById('wellness1').value;
+    let chartConfig;
 
-            if (selection === 'all') {
-                const fields = Object.keys(wellnessFields);
-                const averages = fields.map(field => (wellnessData.reduce((acc, s) => acc + s[field], 0) / wellnessData.length));
-                chartConfig = {
-                    type: 'bar',
-                    data: {
-                        labels: fields.map(f => wellnessFields[f].split(' ')[1]),
-                        datasets: [{ label: 'Class Average Score', data: averages, backgroundColor: 'rgba(79, 70, 229, 0.8)'}]
-                    },
-                    options: { scales: { y: { beginAtZero: true, max: 5 } }, responsive: true, maintainAspectRatio: false }
-                };
-            } else {
-                const distribution = [0, 0, 0, 0, 0];
-                wellnessData.forEach(student => { 
-                    const score = Math.max(1, Math.min(5, student[selection]));
-                    distribution[score - 1]++; 
-                });
-                chartConfig = {
-                    type: 'doughnut',
-                    data: {
-                        labels: ['Score 1', 'Score 2', 'Score 3', 'Score 4', 'Score 5'],
-                        datasets: [{ data: distribution, backgroundColor: ['#ef4444', '#f97316', '#3b82f6', '#22c55e', '#a855f7'] }]
-                    },
-                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right' } } }
-                };
-            }
-            renderChart('chart1', chartConfig);
-            
-            if (state.patternsFound < 1) {
-                 state.patternsFound++;
-                 showAchievement('First Insight!', 'You created your first graph. Keep exploring!');
-                 unlockLevel(2);
-            }
-            updateUI();
-        }
+    if (selection === 'all') {
+        const fields = Object.keys(wellnessFields);
+        const averages = fields.map(field => (wellnessData.reduce((acc, s) => acc + s[field], 0) / wellnessData.length));
+        chartConfig = {
+            type: 'bar',
+            data: {
+                labels: fields.map(f => wellnessFields[f].split(' ')[1]),
+                datasets: [{ label: 'Class Average Score', data: averages, backgroundColor: 'rgba(79, 70, 229, 0.8)'}]
+            },
+            options: { scales: { y: { beginAtZero: true, max: 5 } }, responsive: true, maintainAspectRatio: false }
+        };
+    } else {
+        const distribution = [0, 0, 0, 0, 0];
+        wellnessData.forEach(student => { 
+            const score = Math.max(1, Math.min(5, student[selection]));
+            distribution[score - 1]++; 
+        });
+        chartConfig = {
+            type: 'doughnut',
+            data: {
+                labels: ['Score 1', 'Score 2', 'Score 3', 'Score 4', 'Score 5'],
+                datasets: [{ data: distribution, backgroundColor: ['#ef4444', '#f97316', '#3b82f6', '#22c55e', '#a855f7'] }]
+            },
+            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right' } } }
+        };
+    }
+    renderChart('chart1', chartConfig);
+    
+    if (state.patternsFound < 1) {
+         state.patternsFound++;
+         showAchievement('First Insight!', 'You created your first graph. Keep exploring!');
+         unlockLevel(2);
+    }
+    
+    gamification.checkBadges();
+    ngssAlignment.trackProgress('MS-ETS1-1', 'data_analysis');
+    updateUI();
+}
         function calculateCorrelation(data, field1, field2) {
             let n = data.length, sum_x = 0, sum_y = 0, sum_xy = 0, sum_x2 = 0, sum_y2 = 0;
             for (let i = 0; i < n; i++) {
@@ -364,18 +672,26 @@
             state.lastCorrelation = calculateCorrelation(wellnessData, field1, field2);
             renderChart('chart2', generateScatterConfig(field1, field2));
         }
-        function selectPattern(userChoice) {
-            if (state.lastCorrelation === null) return showInfoModal("Analyze First!", "Please click 'Compare' to generate a graph first.");
-            let actualPattern = state.lastCorrelation > 0.3 ? 'positive' : state.lastCorrelation < -0.3 ? 'negative' : 'none';
-            if (userChoice === actualPattern) {
-                showAchievement("Excellent Observation!", `You're right! The data shows a ${actualPattern} relationship. (Correlation: ${state.lastCorrelation.toFixed(2)})`);
-                unlockLevel(3);
-            } else {
-                showInfoModal("Good Try!", `You chose '${userChoice}', but the data actually shows a '${actualPattern}' relationship. (Correlation: ${state.lastCorrelation.toFixed(2)})`);
-            }
-            state.patternsFound++;
-            updateUI();
-        }
+function selectPattern(userChoice) {
+    if (state.lastCorrelation === null) return showInfoModal("Analyze First!", "Please click 'Compare' to generate a graph first.");
+    
+    let actualPattern = state.lastCorrelation > 0.3 ? 'positive' : state.lastCorrelation < -0.3 ? 'negative' : 'none';
+    const correct = userChoice === actualPattern;
+    
+    assessment.trackAnswer('pattern_recognition', userChoice, correct);
+    
+    if (correct) {
+        showAchievement("Excellent Observation!", `You're right! The data shows a ${actualPattern} relationship. (Correlation: ${state.lastCorrelation.toFixed(2)})`);
+        unlockLevel(3);
+    } else {
+        showInfoModal("Good Try!", `You chose '${userChoice}', but the data actually shows a '${actualPattern}' relationship. (Correlation: ${state.lastCorrelation.toFixed(2)})`);
+    }
+    
+    state.patternsFound++;
+    gamification.checkBadges();
+    ngssAlignment.trackProgress('MS-ETS1-2', 'pattern_analysis');
+    updateUI();
+}
         function exploreForQuestions() {
             const type = document.getElementById('exploreType').value;
             renderChart('chart3', generateBarLineConfig(type, 'id', 'pie'));
@@ -391,14 +707,19 @@
             el.value = templates[type];
             el.focus();
         }
-        function submitQuestion() {
-            const question = document.getElementById('customQuestion').value;
-            if (question.length < 15) return showInfoModal("Question Too Short", "Please write a more detailed question.");
-            state.questionsAsked++;
-            showAchievement('Question Logged!', `Great question! You've crafted ${state.questionsAsked} so far.`);
-            document.getElementById('customQuestion').value = '';
-            unlockLevel(4);
-        }
+function submitQuestion() {
+    const question = document.getElementById('customQuestion').value;
+    if (question.length < 15) return showInfoModal("Question Too Short", "Please write a more detailed question.");
+    
+    assessment.trackInteraction('question_created', { question: question });
+    state.questionsAsked++;
+    showAchievement('Question Logged!', `Great question! You've crafted ${state.questionsAsked} so far.`);
+    document.getElementById('customQuestion').value = '';
+    
+    gamification.checkBadges();
+    ngssAlignment.trackProgress('MS-ETS1-3', 'question_formulation');
+    unlockLevel(4);
+}
 
         async function saveDiscovery() {
             const discoveryText = document.getElementById('discoveryText').value;
@@ -500,7 +821,13 @@
                 options: { responsive: true, maintainAspectRatio: false, scales: { y: { display: type !== 'pie', beginAtZero: true, title: { display: true, text: `Average Score` } } }, plugins: { legend: { position: type === 'pie' ? 'right' : 'top' } } }
             };
         }
+function showAchievement(title, text) {
+    showModal('achievementModal', title, text);
+}
 
+function showInfoModal(title, text) {
+    showModal('infoModal', title, text);
+}
         function showModal(modalId, title, text) {
             const modal = document.getElementById(modalId);
             if (title) modal.querySelector('h2').innerText = title;
