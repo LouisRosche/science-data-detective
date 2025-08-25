@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Science Data Detective 2.0</title>
+    <title>Science Data Detective (Collaborative Edition)</title>
     
     <!-- Tailwind CSS for styling -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -18,49 +18,20 @@
 
     <!-- Custom Styles -->
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f0f4f8; /* Light blue-gray background */
-        }
+        body { font-family: 'Inter', sans-serif; background-color: #f0f4f8; }
         .header-gradient { background: linear-gradient(135deg, #4f46e5, #7c3aed); }
         .stat-card-gradient { background: linear-gradient(135deg, #10b981, #22d3ee); }
-        .level-btn.active {
-            background-color: #4f46e5;
-            color: white;
-            box-shadow: 0 4px 14px 0 rgba(79, 70, 229, 0.39);
-        }
-        .level-btn.locked {
-            background-color: #e5e7eb;
-            cursor: not-allowed;
-            color: #9ca3af;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        .level-btn.active { background-color: #4f46e5; color: white; box-shadow: 0 4px 14px 0 rgba(79, 70, 229, 0.39); }
+        .level-btn.locked { background-color: #e5e7eb; cursor: not-allowed; color: #9ca3af; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         .level-content.active { animation: fadeIn 0.5s ease-in-out forwards; }
-        .modal-backdrop {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            display: flex; justify-content: center; align-items: center;
-            z-index: 1000; opacity: 0; visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
+        .modal-backdrop { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); display: flex; justify-content: center; align-items: center; z-index: 1000; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease; }
         .modal-backdrop.show { opacity: 1; visibility: visible; }
-        .modal-content {
-            background-color: white; padding: 2rem; border-radius: 1rem;
-            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
-            transform: scale(0.95); transition: transform 0.3s ease;
-            max-width: 500px; width: 90%;
-        }
+        .modal-content { background-color: white; padding: 2rem; border-radius: 1rem; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04); transform: scale(0.95); transition: transform 0.3s ease; max-width: 500px; width: 90%; }
         .modal-backdrop.show .modal-content { transform: scale(1); }
-        .glossary-link {
-            cursor: pointer;
-            color: #4f46e5;
-            font-weight: 600;
-            display: inline-block;
-            margin-left: 4px;
-        }
+        .glossary-link { cursor: pointer; color: #4f46e5; font-weight: 600; display: inline-block; margin-left: 4px; }
+        .discovery-card { animation: slideIn 0.5s ease-out forwards; }
+        @keyframes slideIn { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
     </style>
 </head>
 <body class="antialiased text-slate-800">
@@ -70,13 +41,14 @@
             
             <!-- Header Section -->
             <header class="p-6 sm:p-8 text-white header-gradient">
-                <div class="flex justify-between items-center mb-4">
+                <div class="flex justify-between items-center mb-2">
                     <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight">🔬 Science Data Detective</h1>
                     <div class="flex gap-2">
-                        <button onclick="showGlossaryModal()" class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center text-2xl hover:bg-white/30 transition-colors duration-300" aria-label="Open Glossary">📖</button>
-                        <button onclick="showHelpModal()" class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center text-2xl hover:bg-white/30 transition-colors duration-300" aria-label="Open Help">❓</button>
+                        <button onclick="showGlossaryModal()" class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center text-2xl hover:bg-white/30" aria-label="Open Glossary">📖</button>
+                        <button onclick="showHelpModal()" class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center text-2xl hover:bg-white/30" aria-label="Open Help">❓</button>
                     </div>
                 </div>
+                <div class="bg-black/20 text-sm inline-block px-3 py-1 rounded-full mb-4">Your Anonymous ID: <span id="userId" class="font-bold">Loading...</span></div>
                 <p class="text-lg text-indigo-200">Unlock insights by exploring, questioning, and discovering patterns in data.</p>
                 <div class="mt-6">
                     <div class="flex justify-between items-center mb-1">
@@ -89,21 +61,34 @@
 
             <!-- Level Navigation -->
             <nav class="p-4 border-b border-slate-200"><div class="flex flex-wrap gap-3" role="tablist">
-                <button class="level-btn active font-semibold py-3 px-5 rounded-full transition-all duration-300" data-level="1" role="tab" aria-selected="true"><span class="mr-2">📊</span> Level 1: Meet the Data</button>
-                <button class="level-btn locked font-semibold py-3 px-5 rounded-full transition-all duration-300" data-level="2" role="tab" aria-selected="false"><span class="mr-2">🎯</span> Level 2: Find Patterns</button>
-                <button class="level-btn locked font-semibold py-3 px-5 rounded-full transition-all duration-300" data-level="3" role="tab" aria-selected="false"><span class="mr-2">🔍</span> Level 3: Ask Questions</button>
-                <button class="level-btn locked font-semibold py-3 px-5 rounded-full transition-all duration-300" data-level="4" role="tab" aria-selected="false"><span class="mr-2">💡</span> Level 4: Make Discoveries</button>
-                <button class="level-btn locked font-semibold py-3 px-5 rounded-full transition-all duration-300" data-level="5" role="tab" aria-selected="false"><span class="mr-2">🚀</span> Level 5: Challenge Mode</button>
+                <button class="level-btn active font-semibold py-3 px-5 rounded-full" data-level="1" role="tab" aria-selected="true"><span class="mr-2">📊</span> Level 1</button>
+                <button class="level-btn locked font-semibold py-3 px-5 rounded-full" data-level="2" role="tab" aria-selected="false"><span class="mr-2">🎯</span> Level 2</button>
+                <button class="level-btn locked font-semibold py-3 px-5 rounded-full" data-level="3" role="tab" aria-selected="false"><span class="mr-2">🔍</span> Level 3</button>
+                <button class="level-btn locked font-semibold py-3 px-5 rounded-full" data-level="4" role="tab" aria-selected="false"><span class="mr-2">💡</span> Level 4</button>
+                <button class="level-btn locked font-semibold py-3 px-5 rounded-full" data-level="5" role="tab" aria-selected="false"><span class="mr-2">🚀</span> Level 5</button>
             </div></nav>
 
             <!-- Main Content Area -->
             <main class="p-6 sm:p-8">
-                <!-- Level content will be injected by JavaScript -->
-                <div class="level-content active" id="level1"></div>
-                <div class="level-content hidden" id="level2"></div>
-                <div class="level-content hidden" id="level3"></div>
-                <div class="level-content hidden" id="level4"></div>
-                <div class="level-content hidden" id="level5"></div>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="lg:col-span-2">
+                        <!-- Level content will be injected by JavaScript -->
+                        <div class="level-content active" id="level1"></div>
+                        <div class="level-content hidden" id="level2"></div>
+                        <div class="level-content hidden" id="level3"></div>
+                        <div class="level-content hidden" id="level4"></div>
+                        <div class="level-content hidden" id="level5"></div>
+                    </div>
+                    <!-- Live Discovery Wall -->
+                    <aside class="lg:col-span-1">
+                        <div class="bg-slate-50 p-6 rounded-xl border border-slate-200 sticky top-8">
+                            <h3 class="text-xl font-bold text-slate-700 mb-4">🛰️ Live Discovery Wall</h3>
+                            <div id="discoveryWall" class="space-y-4 max-h-[80vh] overflow-y-auto">
+                                <p class="text-slate-500">Discoveries from your classmates will appear here in real-time as they are saved in Level 4!</p>
+                            </div>
+                        </div>
+                    </aside>
+                </div>
             </main>
         </div>
     </div>
@@ -114,7 +99,13 @@
     <div id="infoModal" class="modal-backdrop"></div>
     <div id="glossaryModal" class="modal-backdrop"></div>
 
-    <script>
+    <!-- Firebase SDK -->
+    <script type="module">
+        // Import Firebase modules
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+        import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
         // --- DATA SOURCE ---
         const wellnessData = [
             { "id": 1, "emotional": 2, "physical": 3, "intellectual": 4, "social": 5, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 3, "management": 5, "awareness": 5, "learning_style": "Visual", "group_role": "Creator" }, { "id": 2, "emotional": 5, "physical": 5, "intellectual": 5, "social": 5, "wonder": 5, "environmental": 5, "purpose": 5, "resource": 5, "growth": 5, "persistence": 5, "confidence": 5, "management": 5, "awareness": 5, "learning_style": "Auditory", "group_role": "Leader" }, { "id": 3, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Kinesthetic", "group_role": "Organizer" }, { "id": 4, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Reading/Writing", "group_role": "Researcher" }, { "id": 5, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Visual", "group_role": "Creator" }, { "id": 6, "emotional": 4, "physical": 5, "intellectual": 4, "social": 5, "wonder": 5, "environmental": 4, "purpose": 5, "resource": 4, "growth": 5, "persistence": 5, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Auditory", "group_role": "Leader" }, { "id": 7, "emotional": 4, "physical": 5, "intellectual": 5, "social": 5, "wonder": 5, "environmental": 5, "purpose": 5, "resource": 5, "growth": 5, "persistence": 5, "confidence": 5, "management": 5, "awareness": 5, "learning_style": "Kinesthetic", "group_role": "Organizer" }, { "id": 8, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Reading/Writing", "group_role": "Researcher" }, { "id": 9, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Visual", "group_role": "Creator" }, { "id": 10, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Auditory", "group_role": "Leader" }, { "id": 11, "emotional": 4, "physical": 5, "intellectual": 4, "social": 5, "wonder": 5, "environmental": 4, "purpose": 5, "resource": 4, "growth": 5, "persistence": 5, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Kinesthetic", "group_role": "Organizer" }, { "id": 12, "emotional": 4, "physical": 5, "intellectual": 5, "social": 5, "wonder": 5, "environmental": 5, "purpose": 5, "resource": 5, "growth": 5, "persistence": 5, "confidence": 5, "management": 5, "awareness": 5, "learning_style": "Reading/Writing", "group_role": "Researcher" }, { "id": 13, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Visual", "group_role": "Creator" }, { "id": 14, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Auditory", "group_role": "Leader" }, { "id": 15, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Kinesthetic", "group_role": "Organizer" }, { "id": 16, "emotional": 4, "physical": 5, "intellectual": 4, "social": 5, "wonder": 5, "environmental": 4, "purpose": 5, "resource": 4, "growth": 5, "persistence": 5, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Reading/Writing", "group_role": "Researcher" }, { "id": 17, "emotional": 4, "physical": 5, "intellectual": 5, "social": 5, "wonder": 5, "environmental": 5, "purpose": 5, "resource": 5, "growth": 5, "persistence": 5, "confidence": 5, "management": 5, "awareness": 5, "learning_style": "Visual", "group_role": "Creator" }, { "id": 18, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Auditory", "group_role": "Leader" }, { "id": 19, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Kinesthetic", "group_role": "Organizer" }, { "id": 20, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Reading/Writing", "group_role": "Researcher" }, { "id": 21, "emotional": 4, "physical": 5, "intellectual": 4, "social": 5, "wonder": 5, "environmental": 4, "purpose": 5, "resource": 4, "growth": 5, "persistence": 5, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Visual", "group_role": "Creator" }, { "id": 22, "emotional": 4, "physical": 5, "intellectual": 5, "social": 5, "wonder": 5, "environmental": 5, "purpose": 5, "resource": 5, "growth": 5, "persistence": 5, "confidence": 5, "management": 5, "awareness": 5, "learning_style": "Auditory", "group_role": "Leader" }, { "id": 23, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Kinesthetic", "group_role": "Organizer" }, { "id": 24, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Reading/Writing", "group_role": "Researcher" }, { "id": 25, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Visual", "group_role": "Creator" }, { "id": 26, "emotional": 4, "physical": 5, "intellectual": 4, "social": 5, "wonder": 5, "environmental": 4, "purpose": 5, "resource": 4, "growth": 5, "persistence": 5, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Auditory", "group_role": "Leader" }, { "id": 27, "emotional": 4, "physical": 5, "intellectual": 5, "social": 5, "wonder": 5, "environmental": 5, "purpose": 5, "resource": 5, "growth": 5, "persistence": 5, "confidence": 5, "management": 5, "awareness": 5, "learning_style": "Kinesthetic", "group_role": "Organizer" }, { "id": 28, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Reading/Writing", "group_role": "Researcher" }, { "id": 29, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Visual", "group_role": "Creator" }, { "id": 30, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Auditory", "group_role": "Leader" }, { "id": 31, "emotional": 4, "physical": 5, "intellectual": 4, "social": 5, "wonder": 5, "environmental": 4, "purpose": 5, "resource": 4, "growth": 5, "persistence": 5, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Kinesthetic", "group_role": "Organizer" }, { "id": 32, "emotional": 4, "physical": 5, "intellectual": 5, "social": 5, "wonder": 5, "environmental": 5, "purpose": 5, "resource": 5, "growth": 5, "persistence": 5, "confidence": 5, "management": 5, "awareness": 5, "learning_style": "Reading/Writing", "group_role": "Researcher" }, { "id": 33, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Visual", "group_role": "Creator" }, { "id": 34, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Auditory", "group_role": "Leader" }, { "id": 35, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Kinesthetic", "group_role": "Organizer" }, { "id": 36, "emotional": 4, "physical": 5, "intellectual": 4, "social": 5, "wonder": 5, "environmental": 4, "purpose": 5, "resource": 4, "growth": 5, "persistence": 5, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Reading/Writing", "group_role": "Researcher" }, { "id": 37, "emotional": 4, "physical": 5, "intellectual": 5, "social": 5, "wonder": 5, "environmental": 5, "purpose": 5, "resource": 5, "growth": 5, "persistence": 5, "confidence": 5, "management": 5, "awareness": 5, "learning_style": "Visual", "group_role": "Creator" }, { "id": 38, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Auditory", "group_role": "Leader" }, { "id": 39, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Kinesthetic", "group_role": "Organizer" }, { "id": 40, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Reading/Writing", "group_role": "Researcher" }, { "id": 41, "emotional": 4, "physical": 5, "intellectual": 4, "social": 5, "wonder": 5, "environmental": 4, "purpose": 5, "resource": 4, "growth": 5, "persistence": 5, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Visual", "group_role": "Creator" }, { "id": 42, "emotional": 4, "physical": 5, "intellectual": 5, "social": 5, "wonder": 5, "environmental": 5, "purpose": 5, "resource": 5, "growth": 5, "persistence": 5, "confidence": 5, "management": 5, "awareness": 5, "learning_style": "Auditory", "group_role": "Leader" }, { "id": 43, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Kinesthetic", "group_role": "Organizer" }, { "id": 44, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Reading/Writing", "group_role": "Researcher" }, { "id": 45, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Visual", "group_role": "Creator" }, { "id": 46, "emotional": 4, "physical": 5, "intellectual": 4, "social": 5, "wonder": 5, "environmental": 4, "purpose": 5, "resource": 4, "growth": 5, "persistence": 5, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Auditory", "group_role": "Leader" }, { "id": 47, "emotional": 4, "physical": 5, "intellectual": 5, "social": 5, "wonder": 5, "environmental": 5, "purpose": 5, "resource": 5, "growth": 5, "persistence": 5, "confidence": 5, "management": 5, "awareness": 5, "learning_style": "Kinesthetic", "group_role": "Organizer" }, { "id": 48, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Reading/Writing", "group_role": "Researcher" }, { "id": 49, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Visual", "group_role": "Creator" }, { "id": 50, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Auditory", "group_role": "Leader" }, { "id": 51, "emotional": 4, "physical": 5, "intellectual": 4, "social": 5, "wonder": 5, "environmental": 4, "purpose": 5, "resource": 4, "growth": 5, "persistence": 5, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Kinesthetic", "group_role": "Organizer" }, { "id": 52, "emotional": 4, "physical": 5, "intellectual": 5, "social": 5, "wonder": 5, "environmental": 5, "purpose": 5, "resource": 5, "growth": 5, "persistence": 5, "confidence": 5, "management": 5, "awareness": 5, "learning_style": "Reading/Writing", "group_role": "Researcher" }, { "id": 53, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Visual", "group_role": "Creator" }, { "id": 54, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Auditory", "group_role": "Leader" }, { "id": 55, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Kinesthetic", "group_role": "Organizer" }, { "id": 56, "emotional": 4, "physical": 5, "intellectual": 4, "social": 5, "wonder": 5, "environmental": 4, "purpose": 5, "resource": 4, "growth": 5, "persistence": 5, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Reading/Writing", "group_role": "Researcher" }, { "id": 57, "emotional": 4, "physical": 5, "intellectual": 5, "social": 5, "wonder": 5, "environmental": 5, "purpose": 5, "resource": 5, "growth": 5, "persistence": 5, "confidence": 5, "management": 5, "awareness": 5, "learning_style": "Visual", "group_role": "Creator" }, { "id": 58, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Auditory", "group_role": "Leader" }, { "id": 59, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Kinesthetic", "group_role": "Organizer" }, { "id": 60, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Reading/Writing", "group_role": "Researcher" }, { "id": 61, "emotional": 4, "physical": 5, "intellectual": 4, "social": 5, "wonder": 5, "environmental": 4, "purpose": 5, "resource": 4, "growth": 5, "persistence": 5, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Visual", "group_role": "Creator" }, { "id": 62, "emotional": 4, "physical": 5, "intellectual": 5, "social": 5, "wonder": 5, "environmental": 5, "purpose": 5, "resource": 5, "growth": 5, "persistence": 5, "confidence": 5, "management": 5, "awareness": 5, "learning_style": "Auditory", "group_role": "Leader" }, { "id": 63, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Kinesthetic", "group_role": "Organizer" }, { "id": 64, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Reading/Writing", "group_role": "Researcher" }, { "id": 65, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Visual", "group_role": "Creator" }, { "id": 66, "emotional": 4, "physical": 5, "intellectual": 4, "social": 5, "wonder": 5, "environmental": 4, "purpose": 5, "resource": 4, "growth": 5, "persistence": 5, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Auditory", "group_role": "Leader" }, { "id": 67, "emotional": 4, "physical": 5, "intellectual": 5, "social": 5, "wonder": 5, "environmental": 5, "purpose": 5, "resource": 5, "growth": 5, "persistence": 5, "confidence": 5, "management": 5, "awareness": 5, "learning_style": "Kinesthetic", "group_role": "Organizer" }, { "id": 68, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Reading/Writing", "group_role": "Researcher" }, { "id": 69, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Visual", "group_role": "Creator" }, { "id": 70, "emotional": 4, "physical": 4, "intellectual": 4, "social": 4, "wonder": 4, "environmental": 4, "purpose": 4, "resource": 4, "growth": 4, "persistence": 4, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Auditory", "group_role": "Leader" }, { "id": 71, "emotional": 4, "physical": 5, "intellectual": 4, "social": 5, "wonder": 5, "environmental": 4, "purpose": 5, "resource": 4, "growth": 5, "persistence": 5, "confidence": 4, "management": 4, "awareness": 4, "learning_style": "Kinesthetic", "group_role": "Organizer" }, { "id": 72, "emotional": 4, "physical": 5, "intellectual": 5, "social": 5, "wonder": 5, "environmental": 5, "purpose": 5, "resource": 5, "growth": 5, "persistence": 5, "confidence": 5, "management": 5, "awareness": 5, "learning_style": "Reading/Writing", "group_role": "Researcher" }
@@ -125,7 +116,7 @@
         // --- STATE MANAGEMENT ---
         const state = {
             currentLevel: 1, unlockedLevels: [1], patternsFound: 0, questionsAsked: 0, discoveriesMade: 0,
-            charts: {}, lastCorrelation: null, currentChallenge: 0
+            charts: {}, lastCorrelation: null, currentChallenge: 0, userId: null, db: null
         };
 
         // --- CHALLENGES ---
@@ -135,6 +126,65 @@
             { id: 2, question: "Which group role has the lowest average 'Social Awareness'?", x: 'group_role', y: 'awareness', type: 'bar' }
         ];
 
+        // --- FIREBASE SETUP ---
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : { apiKey: "...", authDomain: "...", projectId: "..." };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        state.db = getFirestore(app);
+
+        // --- AUTHENTICATION ---
+        async function initializeAuth() {
+            try {
+                const customToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+                if (customToken) {
+                    await signInWithCustomToken(auth, customToken);
+                } else {
+                    await signInAnonymously(auth);
+                }
+            } catch (error) {
+                console.error("Authentication failed:", error);
+                document.getElementById('userId').textContent = 'Auth Error';
+            }
+        }
+
+        onAuthStateChanged(auth, user => {
+            if (user) {
+                state.userId = user.uid;
+                document.getElementById('userId').textContent = state.userId.substring(0, 8);
+                setupRealtimeListener();
+            } else {
+                state.userId = null;
+                document.getElementById('userId').textContent = 'Not Signed In';
+            }
+        });
+
+        // --- REAL-TIME LISTENER ---
+        function setupRealtimeListener() {
+            const discoveriesCol = collection(state.db, `/artifacts/${appId}/public/data/discoveries`);
+            const q = query(discoveriesCol, orderBy('createdAt', 'desc'));
+
+            onSnapshot(q, (snapshot) => {
+                const wall = document.getElementById('discoveryWall');
+                wall.innerHTML = ''; 
+                if (snapshot.empty) {
+                    wall.innerHTML = `<p class="text-slate-500">No discoveries yet. Be the first!</p>`;
+                    return;
+                }
+                snapshot.forEach(doc => {
+                    const discovery = doc.data();
+                    const card = document.createElement('div');
+                    card.className = `discovery-card p-4 bg-white rounded-lg border-2 ${discovery.authorId === state.userId ? 'border-indigo-500' : 'border-slate-200'}`;
+                    card.innerHTML = `
+                        <p class="text-slate-800">${discovery.text}</p>
+                        <p class="text-xs text-slate-400 mt-2">By: ${discovery.authorId.substring(0, 8)}</p>
+                    `;
+                    wall.appendChild(card);
+                });
+            });
+        }
+        
         // --- INITIALIZATION ---
         document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('level1').innerHTML = generateLevel1HTML();
@@ -152,7 +202,26 @@
             setupEventListeners();
             updateUI();
             document.getElementById('stat1').innerText = wellnessData.length;
+            
+            // Start Authentication
+            initializeAuth();
         });
+
+        // Make functions globally accessible
+        window.exploreBasicData = exploreBasicData;
+        window.compareData = compareData;
+        window.selectPattern = selectPattern;
+        window.exploreForQuestions = exploreForQuestions;
+        window.useTemplate = useTemplate;
+        window.submitQuestion = submitQuestion;
+        window.buildCustomGraph = buildCustomGraph;
+        window.saveDiscovery = saveDiscovery;
+        window.startChallenge = startChallenge;
+        window.checkChallengeAnswer = checkChallengeAnswer;
+        window.showHelpModal = showHelpModal;
+        window.showGlossaryModal = showGlossaryModal;
+        window.closeModal = closeModal;
+
 
         function populateSelects() {
             const allFields = {...wellnessFields, ...categoricalFields};
@@ -167,7 +236,8 @@
 
             selectsToPopulate.forEach(s => {
                 const select = document.getElementById(s.id);
-                select.innerHTML = ''; // Clear existing options
+                if (!select) return;
+                select.innerHTML = '';
                 const placeholderOption = document.createElement('option');
                 placeholderOption.value = "";
                 placeholderOption.textContent = s.placeholder;
@@ -182,7 +252,6 @@
             });
         }
         
-        // --- EVENT LISTENERS & UI MANAGEMENT ---
         function setupEventListeners() {
             document.querySelectorAll('.level-btn').forEach(btn => {
                 btn.addEventListener('click', () => {
@@ -234,12 +303,11 @@
             if (state.charts[canvasId]) {
                 state.charts[canvasId].destroy();
             }
-            if (!config) return; // Don't render if config is invalid
+            if (!config) return;
             const ctx = document.getElementById(canvasId).getContext('2d');
             state.charts[canvasId] = new Chart(ctx, config);
         }
 
-        // --- LEVEL 1-3 LOGIC ---
         function exploreBasicData() {
             const selection = document.getElementById('wellness1').value;
             let chartConfig;
@@ -251,7 +319,7 @@
                     type: 'bar',
                     data: {
                         labels: fields.map(f => wellnessFields[f].split(' ')[1]),
-                        datasets: [{ label: 'Class Average Score', data: averages, backgroundColor: 'rgba(79, 70, 229, 0.8)', borderColor: 'rgba(79, 70, 229, 1)', borderWidth: 1, borderRadius: 5 }]
+                        datasets: [{ label: 'Class Average Score', data: averages, backgroundColor: 'rgba(79, 70, 229, 0.8)'}]
                     },
                     options: { scales: { y: { beginAtZero: true, max: 5 } }, responsive: true, maintainAspectRatio: false }
                 };
@@ -280,107 +348,95 @@
             updateUI();
         }
         function calculateCorrelation(data, field1, field2) {
-            let n = data.length;
-            let sum_x = 0, sum_y = 0, sum_xy = 0, sum_x2 = 0, sum_y2 = 0;
+            let n = data.length, sum_x = 0, sum_y = 0, sum_xy = 0, sum_x2 = 0, sum_y2 = 0;
             for (let i = 0; i < n; i++) {
-                sum_x += data[i][field1];
-                sum_y += data[i][field2];
-                sum_xy += data[i][field1] * data[i][field2];
-                sum_x2 += data[i][field1] * data[i][field1];
-                sum_y2 += data[i][field2] * data[i][field2];
+                sum_x += data[i][field1]; sum_y += data[i][field2]; sum_xy += data[i][field1] * data[i][field2];
+                sum_x2 += data[i][field1] * data[i][field1]; sum_y2 += data[i][field2] * data[i][field2];
             }
-            const numerator = n * sum_xy - sum_x * sum_y;
-            const denominator = Math.sqrt((n * sum_x2 - sum_x * sum_x) * (n * sum_y2 - sum_y * sum_y));
-            if (denominator === 0) return 0;
-            return numerator / denominator;
+            const num = n * sum_xy - sum_x * sum_y;
+            const den = Math.sqrt((n * sum_x2 - sum_x * sum_x) * (n * sum_y2 - sum_y * sum_y));
+            return den === 0 ? 0 : num / den;
         }
         function compareData() {
             const field1 = document.getElementById('compare1').value;
             const field2 = document.getElementById('compare2').value;
-            
-            if (field1 === field2) {
-                return showInfoModal("Selection Error", "Please select two different wellness areas to compare.");
-            }
+            if (field1 === field2) return showInfoModal("Selection Error", "Please select two different wellness areas to compare.");
             state.lastCorrelation = calculateCorrelation(wellnessData, field1, field2);
             renderChart('chart2', generateScatterConfig(field1, field2));
         }
         function selectPattern(userChoice) {
-            if (state.lastCorrelation === null) {
-                return showInfoModal("Analyze First!", "Please click the 'Compare' button to generate a graph before identifying a pattern.");
-            }
-            let actualPattern;
-            if (state.lastCorrelation > 0.3) actualPattern = 'positive';
-            else if (state.lastCorrelation < -0.3) actualPattern = 'negative';
-            else actualPattern = 'none';
-
+            if (state.lastCorrelation === null) return showInfoModal("Analyze First!", "Please click 'Compare' to generate a graph first.");
+            let actualPattern = state.lastCorrelation > 0.3 ? 'positive' : state.lastCorrelation < -0.3 ? 'negative' : 'none';
             if (userChoice === actualPattern) {
                 showAchievement("Excellent Observation!", `You're right! The data shows a ${actualPattern} relationship. (Correlation: ${state.lastCorrelation.toFixed(2)})`);
                 unlockLevel(3);
             } else {
-                showInfoModal("Good Try!", `You chose '${userChoice}', but the data actually shows a '${actualPattern}' relationship. Look closely at the trend of the dots. (Correlation: ${state.lastCorrelation.toFixed(2)})`);
+                showInfoModal("Good Try!", `You chose '${userChoice}', but the data actually shows a '${actualPattern}' relationship. (Correlation: ${state.lastCorrelation.toFixed(2)})`);
             }
             state.patternsFound++;
             updateUI();
         }
         function exploreForQuestions() {
             const type = document.getElementById('exploreType').value;
-            renderChart('chart3', generateBarLineConfig(type, 'id', 'pie')); // Use 'id' as a dummy for count
+            renderChart('chart3', generateBarLineConfig(type, 'id', 'pie'));
         }
         function useTemplate(type) {
-            const questionEl = document.getElementById('customQuestion');
+            const el = document.getElementById('customQuestion');
             const templates = {
-                calculate: "What percentage of students prefer Visual learning compared to Auditory learning?",
-                compare: "Which group has a higher average Self-Confidence score: students who prefer the 'Leader' role or those who prefer the 'Researcher' role?",
-                predict: "If we surveyed 100 more students, how many would likely prefer a 'Creator' role based on our current data?",
-                explain: "Why do you think there might be a connection between a student's preferred learning style and their Intellectual Wellness score?"
+                calculate: "What percentage of students prefer Visual learning vs. Auditory learning?",
+                compare: "Which group has a higher average Self-Confidence score: 'Leaders' or 'Researchers'?",
+                predict: "If we surveyed 100 more students, how many would likely prefer a 'Creator' role?",
+                explain: "Why might there be a connection between Learning Style and Intellectual Wellness?"
             };
-            questionEl.value = templates[type];
-            questionEl.focus();
+            el.value = templates[type];
+            el.focus();
         }
         function submitQuestion() {
             const question = document.getElementById('customQuestion').value;
-            if (question.length < 15) {
-                return showInfoModal("Question Too Short", "Please write a more detailed question before submitting.");
-            }
+            if (question.length < 15) return showInfoModal("Question Too Short", "Please write a more detailed question.");
             state.questionsAsked++;
-            showAchievement('Question Submitted!', `You've crafted ${state.questionsAsked} great question(s)! Your question was: "${question}"`);
+            showAchievement('Question Logged!', `Great question! You've crafted ${state.questionsAsked} so far.`);
             document.getElementById('customQuestion').value = '';
             unlockLevel(4);
         }
 
-        // --- LEVEL 4 LOGIC ---
+        async function saveDiscovery() {
+            const discoveryText = document.getElementById('discoveryText').value;
+            if (discoveryText.length < 20) return showInfoModal("More Detail Needed", "Please describe your discovery in more detail.");
+            if (!state.userId || !state.db) return showInfoModal("Connection Error", "Cannot connect to the database. Please refresh.");
+
+            const button = document.querySelector('#level4 button[onclick="saveDiscovery()"]');
+            button.disabled = true;
+            button.innerHTML = 'Saving...';
+
+            try {
+                await addDoc(collection(state.db, `/artifacts/${appId}/public/data/discoveries`), {
+                    text: discoveryText,
+                    authorId: state.userId,
+                    createdAt: serverTimestamp()
+                });
+                state.discoveriesMade++;
+                showAchievement('Discovery Shared!', `It's on the Live Wall! You've made ${state.discoveriesMade} discoveries.`);
+                document.getElementById('discoveryText').value = '';
+                unlockLevel(5);
+            } catch (error) {
+                console.error("Error adding document: ", error);
+                showInfoModal("Save Failed", "Could not save your discovery. Please check your connection and try again.");
+            } finally {
+                button.disabled = false;
+                button.innerHTML = 'Share to Discovery Wall';
+            }
+        }
+
         function buildCustomGraph() {
             const xField = document.getElementById('xAxis').value;
             const yField = document.getElementById('yAxis').value;
             const type = document.getElementById('graphType').value;
-
-            if (!xField || !yField) {
-                return showInfoModal("Selection Missing", "Please select a variable for both the X-Axis and Y-Axis.");
-            }
-            if (xField === yField) {
-                return showInfoModal("Selection Error", "Please select different variables for the X and Y axes.");
-            }
-            
-            let chartConfig;
-            if (type === 'scatter') {
-                chartConfig = generateScatterConfig(xField, yField);
-            } else {
-                chartConfig = generateBarLineConfig(xField, yField, type);
-            }
-            renderChart('chart4', chartConfig);
+            if (!xField || !yField) return showInfoModal("Selection Missing", "Please select a variable for both axes.");
+            if (xField === yField) return showInfoModal("Selection Error", "Please select different variables for the axes.");
+            renderChart('chart4', type === 'scatter' ? generateScatterConfig(xField, yField) : generateBarLineConfig(xField, yField, type));
         }
-        function saveDiscovery() {
-            const discoveryText = document.getElementById('discoveryText').value;
-            if (discoveryText.length < 20) {
-                return showInfoModal("More Detail Needed", "Please describe your discovery in a bit more detail before saving.");
-            }
-            state.discoveriesMade++;
-            showAchievement('Discovery Saved!', `You've documented ${state.discoveriesMade} discoveries. Awesome work!`);
-            document.getElementById('discoveryText').value = '';
-            unlockLevel(5);
-        }
-
-        // --- LEVEL 5 LOGIC ---
+        
         function startChallenge() {
             state.currentChallenge = (state.currentChallenge + 1) % challenges.length;
             const challenge = challenges[state.currentChallenge];
@@ -397,18 +453,15 @@
             renderChart('chart5', userType === 'scatter' ? generateScatterConfig(userX, userY) : generateBarLineConfig(userX, userY, userType));
 
             if (userX === challenge.x && userY === challenge.y && userType === challenge.type) {
-                showAchievement("Challenge Complete!", "You used the right graph to solve the challenge! You're a master data detective!");
+                showAchievement("Challenge Complete!", "You used the right graph to solve the challenge!");
             } else {
-                showInfoModal("Keep Trying!", "That's not quite the right graph to answer the question. Think about what kind of data you need to see. Bar charts are great for comparing averages of categories!");
+                showInfoModal("Keep Trying!", "That's not quite the right graph to answer the question. Bar charts are great for comparing averages of categories!");
             }
         }
 
-        // --- CHART GENERATION HELPERS ---
         function generateScatterConfig(xField, yField) {
-            const xIsCategorical = Object.keys(categoricalFields).includes(xField);
-            const yIsCategorical = Object.keys(categoricalFields).includes(yField);
-            if(xIsCategorical || yIsCategorical) {
-                showInfoModal("Graphing Error", "Scatter plots require numeric data (like wellness scores) for both the X and Y axes.");
+            if (categoricalFields[xField] || categoricalFields[yField]) {
+                showInfoModal("Graphing Error", "Scatter plots require numeric data (like wellness scores) for both axes.");
                 return null;
             }
             const data = wellnessData.map(s => ({ x: s[xField] + (Math.random() - 0.5) * 0.2, y: s[yField] + (Math.random() - 0.5) * 0.2 }));
@@ -418,41 +471,36 @@
             };
         }
         function generateBarLineConfig(xField, yField, type) {
-            const xIsCategorical = Object.keys(categoricalFields).includes(xField);
-            if (!xIsCategorical) {
-                showInfoModal("Graphing Error", "Bar and Line charts require a categorical variable (like Learning Style) on the X-Axis.");
+            if (!categoricalFields[xField]) {
+                showInfoModal("Graphing Error", "This chart type requires a categorical variable (like Learning Style) on the X-Axis.");
                 return null;
             }
-             if (type === 'pie' && yField !== 'id') {
-                showInfoModal("Graphing Error", "Pie charts are used for showing parts of a whole, like the distribution of learning styles. Please select another chart type to compare averages.");
+            if (type === 'pie' && yField !== 'id') {
+                showInfoModal("Graphing Error", "Pie charts are for showing distribution of a category, not averages.");
                 return null;
             }
-
             const categories = [...new Set(wellnessData.map(s => s[xField]))];
             let data, label;
-            
-            if (yField === 'id' && type === 'pie') { // This is a count for pie charts
+            if (yField === 'id' && type === 'pie') {
                 data = categories.map(cat => wellnessData.filter(s => s[xField] === cat).length);
                 label = 'Number of Students';
-            } else { // This is an average for bar/line charts
+            } else {
+                if(categoricalFields[yField]) {
+                    showInfoModal("Graphing Error", "The Y-Axis must be numeric for Bar and Line charts.");
+                    return null;
+                }
                 data = categories.map(cat => {
                     const filteredData = wellnessData.filter(s => s[xField] === cat);
                     return filteredData.reduce((acc, s) => acc + s[yField], 0) / filteredData.length;
                 });
                 label = `Average ${wellnessFields[yField]}`;
             }
-
             return {
                 type, data: { labels: categories, datasets: [{ label, data, backgroundColor: ['#2dd4bf', '#fbbf24', '#60a5fa', '#f87171', '#c084fc'] }] },
                 options: { responsive: true, maintainAspectRatio: false, scales: { y: { display: type !== 'pie', beginAtZero: true, title: { display: true, text: `Average Score` } } }, plugins: { legend: { position: type === 'pie' ? 'right' : 'top' } } }
             };
         }
 
-        // --- MODAL & NOTIFICATION LOGIC ---
-        function showAchievement(title, text) { showModal('achievementModal', title, text); }
-        function showHelpModal() { showModal('helpModal'); }
-        function showInfoModal(title, text) { showModal('infoModal', title, text); }
-        function showGlossaryModal() { showModal('glossaryModal'); }
         function showModal(modalId, title, text) {
             const modal = document.getElementById(modalId);
             if (title) modal.querySelector('h2').innerText = title;
@@ -460,199 +508,18 @@
             modal.classList.add('show');
         }
         function closeModal(modalId) { document.getElementById(modalId).classList.remove('show'); }
+        function showHelpModal() { showModal('helpModal'); }
+        function showGlossaryModal() { showModal('glossaryModal'); }
+        
+        function generateLevel1HTML() { return `<div class="bg-blue-50 border-l-4 border-blue-500 text-blue-800 p-4 rounded-r-lg mb-6"><h3 class="font-bold text-xl mb-1">🎮 Welcome, Data Detective!</h3><p>Explore our class's wellness data. Your first mission is to visualize the data and find your first insight!</p></div><div class="bg-slate-50 p-6 rounded-xl border border-slate-200"><h3 class="text-xl font-bold text-slate-700 mb-4">Choose What to Explore</h3><div class="flex flex-col sm:flex-row gap-4 items-center"><select id="wellness1" class="w-full sm:w-auto flex-grow p-3 border border-slate-300 rounded-lg"><option value="all">All Wellness Areas (Average)</option><option value="emotional">😊 Emotional Wellness</option><option value="physical">💪 Physical Wellness</option><option value="intellectual">🧠 Intellectual Wellness</option><option value="social">👥 Social Wellness</option><option value="wonder">✨ Sense of Wonder</option><option value="environmental">🌍 Environmental Awareness</option><option value="purpose">🎯 Purpose & Contribution</option><option value="resource">📦 Resource Management</option><option value="growth">📈 Growth Mindset</option><option value="persistence">💫 Persistence</option><option value="confidence">💪 Self-Confidence</option><option value="management">⚡ Self-Management</option><option value="awareness">👁️ Social Awareness</option></select><button onclick="exploreBasicData()" class="w-full sm:w-auto bg-indigo-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-indigo-700">Explore</button></div></div><div class="mt-6 bg-white p-4 rounded-xl shadow-md min-h-[400px]"><canvas id="chart1"></canvas></div><div class="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-6 text-white"><div class="stat-card-gradient p-6 rounded-xl text-center"><div class="text-4xl font-bold" id="stat1">0</div><div class="text-indigo-100">Students</div></div><div class="stat-card-gradient p-6 rounded-xl text-center"><div class="text-4xl font-bold" id="stat2">13</div><div class="text-indigo-100">Wellness Areas</div></div><div class="stat-card-gradient p-6 rounded-xl text-center"><div class="text-4xl font-bold" id="stat3">0</div><div class="text-indigo-100">Patterns Found</div></div></div>`; }
+        function generateLevel2HTML() { return `<div class="bg-green-50 border-l-4 border-green-500 text-green-800 p-4 rounded-r-lg mb-6"><h3 class="font-bold text-xl mb-1">🎯 Pattern Hunter Mode!</h3><p>Compare two things to see if they're connected. Does "Growth Mindset" relate to "Persistence"? Let's find out!</p></div><div class="bg-slate-50 p-6 rounded-xl border border-slate-200"><h3 class="text-xl font-bold text-slate-700 mb-4">Compare Two Wellness Areas</h3><div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-center"><select id="compare1" class="w-full p-3 border border-slate-300 rounded-lg"><option value="growth">📈 Growth Mindset</option><option value="persistence">💫 Persistence</option><option value="confidence">💪 Self-Confidence</option><option value="social">👥 Social Wellness</option><option value="wonder">✨ Sense of Wonder</option><option value="intellectual">🧠 Intellectual Wellness</option></select><select id="compare2" class="w-full p-3 border border-slate-300 rounded-lg"><option value="persistence">💫 Persistence</option><option value="confidence">💪 Self-Confidence</option><option value="intellectual">🧠 Intellectual Wellness</option><option value="emotional">😊 Emotional Wellness</option><option value="social">👥 Social Wellness</option></select><button onclick="compareData()" class="w-full bg-indigo-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-indigo-700">Compare</button></div></div><div class="mt-6 bg-white p-4 rounded-xl shadow-md min-h-[400px]"><canvas id="chart2"></canvas></div><div class="mt-6 bg-amber-50 p-6 rounded-xl border border-amber-200"><h3 class="text-xl font-bold text-slate-700 mb-4">💭 What Pattern Do You See? <span class="glossary-link" onclick="showGlossaryModal()">[?]</span></h3><div class="flex flex-col sm:flex-row gap-4"><button onclick="selectPattern('positive')" class="w-full text-left p-4 bg-white rounded-lg border-2 hover:border-green-500">📈 Positive</button><button onclick="selectPattern('negative')" class="w-full text-left p-4 bg-white rounded-lg border-2 hover:border-red-500">📉 Negative</button><button onclick="selectPattern('none')" class="w-full text-left p-4 bg-white rounded-lg border-2 hover:border-slate-500">🤷 No Pattern</button></div></div>`; }
+        function generateLevel3HTML() { return `<div class="bg-purple-50 border-l-4 border-purple-500 text-purple-800 p-4 rounded-r-lg mb-6"><h3 class="font-bold text-xl mb-1">🔍 Question Creator!</h3><p>Great detectives ask great questions. Use the data to create a question for your classmates.</p></div><div class="bg-slate-50 p-6 rounded-xl border border-slate-200"><h3 class="text-xl font-bold text-slate-700 mb-4">Explore Learning & Group Styles</h3><div class="flex flex-col sm:flex-row gap-4 items-center"><select id="exploreType" class="w-full sm:w-auto flex-grow p-3 border border-slate-300 rounded-lg"><option value="learning_style">How Students Learn Best</option><option value="group_role">Preferred Group Work Role</option></select><button onclick="exploreForQuestions()" class="w-full sm:w-auto bg-indigo-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-indigo-700">Show Data</button></div></div><div class="mt-6 bg-white p-4 rounded-xl shadow-md min-h-[400px]"><canvas id="chart3"></canvas></div><div class="mt-6 bg-cyan-50 p-6 rounded-xl border border-cyan-200"><h3 class="text-xl font-bold text-slate-700 mb-4">✏️ Build Your Question</h3><div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4"><button onclick="useTemplate('calculate')" class="text-left p-3 bg-white rounded-lg border-2 hover:border-indigo-500">🧮 "What percentage..."</button><button onclick="useTemplate('compare')" class="text-left p-3 bg-white rounded-lg border-2 hover:border-indigo-500">⚖️ "Which group has..."</button><button onclick="useTemplate('predict')" class="text-left p-3 bg-white rounded-lg border-2 hover:border-indigo-500">🔮 "If we surveyed..."</button><button onclick="useTemplate('explain')" class="text-left p-3 bg-white rounded-lg border-2 hover:border-indigo-500">💡 "Why do you think..."</button></div><textarea id="customQuestion" rows="3" class="w-full p-3 border border-slate-300 rounded-lg" placeholder="Write your question here..."></textarea><button onclick="submitQuestion()" class="mt-4 w-full sm:w-auto bg-indigo-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-indigo-700">Submit Question</button></div>`; }
+        function generateLevel4HTML() { return `<div class="bg-red-50 border-l-4 border-red-500 text-red-800 p-4 rounded-r-lg mb-6"><h3 class="font-bold text-xl mb-1">💡 Discovery Lab!</h3><p>Build custom graphs to find hidden patterns. When you find something interesting, share it to the Live Discovery Wall!</p></div><div class="bg-slate-50 p-6 rounded-xl border border-slate-200"><h3 class="text-xl font-bold text-slate-700 mb-4">Graph Builder</h3><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-center"><select id="xAxis" class="w-full p-3 border border-slate-300 rounded-lg"></select><select id="yAxis" class="w-full p-3 border border-slate-300 rounded-lg"></select><select id="graphType" class="w-full p-3 border border-slate-300 rounded-lg"><option value="scatter">Scatter Plot</option><option value="bar">Bar Chart</option><option value="line">Line Graph</option></select><button onclick="buildCustomGraph()" class="w-full bg-indigo-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-indigo-700">Build Graph</button></div></div><div class="mt-6 bg-white p-4 rounded-xl shadow-md min-h-[400px]"><canvas id="chart4"></canvas></div><div class="mt-6 bg-emerald-50 p-6 rounded-xl border border-emerald-200"><h3 class="text-xl font-bold text-slate-700 mb-4">📝 Document Your Discovery</h3><textarea id="discoveryText" rows="4" class="w-full p-3 border border-slate-300 rounded-lg" placeholder="I discovered that students with high 'Persistence' also tend to have high 'Self-Confidence'. I think this is because..."></textarea><button onclick="saveDiscovery()" class="mt-4 w-full sm:w-auto bg-indigo-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-indigo-700">Share to Discovery Wall</button></div>`; }
+        function generateLevel5HTML() { return `<div class="bg-yellow-50 border-l-4 border-yellow-500 text-yellow-800 p-4 rounded-r-lg mb-6"><h3 class="font-bold text-xl mb-1">🚀 Challenge Mode!</h3><p>Use the Graph Builder to find the evidence needed to answer the challenge question.</p></div><div id="challengeContainer" class="bg-slate-800 text-white p-6 rounded-xl text-center"><h3 class="text-2xl font-bold mb-2" id="challengeTitle">Challenge #1</h3><p class="text-lg text-slate-300" id="challengeQuestion">Which learning style reports the highest average "Sense of Wonder"?</p><button onclick="startChallenge()" class="mt-4 bg-amber-500 text-slate-900 font-bold py-2 px-6 rounded-lg hover:bg-amber-400">Get a New Challenge</button></div><div class="mt-6 bg-slate-50 p-6 rounded-xl border border-slate-200"><h3 class="text-xl font-bold text-slate-700 mb-4">Challenge Graph Builder</h3><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-center"><select id="challengeXAxis" class="w-full p-3 border border-slate-300 rounded-lg"></select><select id="challengeYAxis" class="w-full p-3 border border-slate-300 rounded-lg"></select><select id="challengeGraphType" class="w-full p-3 border border-slate-300 rounded-lg"><option value="bar">Bar Chart</option><option value="scatter">Scatter Plot</option><option value="line">Line Graph</option></select><button onclick="checkChallengeAnswer()" class="w-full bg-green-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-green-700">Check Answer</button></div></div><div class="mt-6 bg-white p-4 rounded-xl shadow-md min-h-[400px]"><canvas id="chart5"></canvas></div>`; }
+        function generateModalHTML(id, icon, title, text) { return `<div class="modal-content text-center"><div class="text-6xl mb-4">${icon}</div><h2 class="text-2xl font-bold text-slate-800 mb-2">${title}</h2><p class="text-slate-600 mb-6">${text}</p><button onclick="closeModal('${id}')" class="bg-indigo-600 text-white font-semibold py-2 px-6 rounded-lg">OK</button></div>`; }
+        function generateHelpModalHTML() { return `<div class="modal-content"><h2 class="text-2xl font-bold text-slate-800 mb-4">How to Play</h2><div class="space-y-4 text-slate-600"><p><strong>Level 1:</strong> Get familiar with the data by visualizing different wellness areas.</p><p><strong>Level 2:</strong> Compare two different areas to find relationships and patterns.</p><p><strong>Level 3:</strong> Use the data to formulate insightful questions.</p><p><strong>Level 4:</strong> Build your own custom graphs to make unique discoveries and share them to the Live Wall!</p><p><strong>Level 5:</strong> Put your skills to the test in challenge mode!</p></div><div class="mt-6 text-right"><button onclick="closeModal('helpModal')" class="bg-indigo-600 text-white font-semibold py-2 px-6 rounded-lg">Got it!</button></div></div>`; }
+        function generateGlossaryModalHTML() { return `<div class="modal-content"><h2 class="text-2xl font-bold text-slate-800 mb-4">📖 Glossary</h2><div class="space-y-4 text-slate-600 max-h-[60vh] overflow-y-auto"><div><strong>Correlation:</strong> A measure of how closely two things are related. A positive correlation means as one goes up, the other goes up. A negative correlation means as one goes up, the other goes down.</div><div><strong>Scatter Plot:</strong> A graph that uses dots to show the relationship between two variables. It's great for spotting correlations.</div><div><strong>Bar Chart:</strong> A graph that uses bars to compare the average values of different categories.</div><div><strong>X-Axis:</strong> The horizontal line at the bottom of a graph. It shows the independent variable, or what you are changing/comparing.</div><div><strong>Y-Axis:</strong> The vertical line on the side of a graph. It shows the dependent variable, or what you are measuring.</div></div><div class="mt-6 text-right"><button onclick="closeModal('glossaryModal')" class="bg-indigo-600 text-white font-semibold py-2 px-6 rounded-lg">Close</button></div></div>`; }
 
-        // --- DYNAMIC HTML GENERATORS ---
-        function generateLevel1HTML() {
-            return `
-                <div class="bg-blue-50 border-l-4 border-blue-500 text-blue-800 p-4 rounded-r-lg mb-6">
-                    <h3 class="font-bold text-xl mb-1">🎮 Welcome, Data Detective!</h3>
-                    <p>Let's explore our class's wellness and learning data. Your first mission is to visualize the data and find your first insight!</p>
-                </div>
-                <div class="bg-slate-50 p-6 rounded-xl border border-slate-200">
-                    <h3 class="text-xl font-bold text-slate-700 mb-4">Choose What to Explore</h3>
-                    <div class="flex flex-col sm:flex-row gap-4 items-center">
-                        <select id="wellness1" class="w-full sm:w-auto flex-grow p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
-                            <option value="all">All Wellness Areas (Average)</option>
-                            <option value="emotional">😊 Emotional Wellness</option>
-                            <option value="physical">💪 Physical Wellness</option>
-                            <option value="intellectual">🧠 Intellectual Wellness</option>
-                            <option value="social">👥 Social Wellness</option>
-                            <option value="wonder">✨ Sense of Wonder</option>
-                            <option value="environmental">🌍 Environmental Awareness</option>
-                            <option value="purpose">🎯 Purpose & Contribution</option>
-                            <option value="resource">📦 Resource Management</option>
-                            <option value="growth">📈 Growth Mindset</option>
-                            <option value="persistence">💫 Persistence</option>
-                            <option value="confidence">💪 Self-Confidence</option>
-                            <option value="management">⚡ Self-Management</option>
-                            <option value="awareness">👁️ Social Awareness</option>
-                        </select>
-                        <button onclick="exploreBasicData()" class="w-full sm:w-auto bg-indigo-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-indigo-700 transition-colors duration-300 flex items-center justify-center gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                            Explore
-                        </button>
-                    </div>
-                </div>
-                <div class="mt-6 bg-white p-4 rounded-xl shadow-md min-h-[400px]"><canvas id="chart1"></canvas></div>
-                <div class="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-6 text-white">
-                    <div class="stat-card-gradient p-6 rounded-xl text-center"><div class="text-4xl font-bold" id="stat1">0</div><div class="text-indigo-100">Students</div></div>
-                    <div class="stat-card-gradient p-6 rounded-xl text-center"><div class="text-4xl font-bold" id="stat2">13</div><div class="text-indigo-100">Wellness Areas</div></div>
-                    <div class="stat-card-gradient p-6 rounded-xl text-center"><div class="text-4xl font-bold" id="stat3">0</div><div class="text-indigo-100">Patterns Found</div></div>
-                </div>`;
-        }
-        function generateLevel2HTML() {
-            return `
-                <div class="bg-green-50 border-l-4 border-green-500 text-green-800 p-4 rounded-r-lg mb-6">
-                    <h3 class="font-bold text-xl mb-1">🎯 Pattern Hunter Mode!</h3>
-                    <p>Compare two things to see if they're connected. Does high "Growth Mindset" relate to high "Persistence"? Let's find out!</p>
-                </div>
-                <div class="bg-slate-50 p-6 rounded-xl border border-slate-200">
-                    <h3 class="text-xl font-bold text-slate-700 mb-4">Compare Two Wellness Areas</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
-                        <select id="compare1" class="w-full p-3 border border-slate-300 rounded-lg">
-                            <option value="growth">📈 Growth Mindset</option>
-                            <option value="persistence">💫 Persistence</option>
-                            <option value="confidence">💪 Self-Confidence</option>
-                            <option value="social">👥 Social Wellness</option>
-                            <option value="wonder">✨ Sense of Wonder</option>
-                            <option value="intellectual">🧠 Intellectual Wellness</option>
-                        </select>
-                         <select id="compare2" class="w-full p-3 border border-slate-300 rounded-lg">
-                            <option value="persistence">💫 Persistence</option>
-                            <option value="confidence">💪 Self-Confidence</option>
-                            <option value="intellectual">🧠 Intellectual Wellness</option>
-                            <option value="emotional">😊 Emotional Wellness</option>
-                            <option value="social">👥 Social Wellness</option>
-                        </select>
-                        <button onclick="compareData()" class="w-full bg-indigo-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-indigo-700">Compare</button>
-                    </div>
-                </div>
-                <div class="mt-6 bg-white p-4 rounded-xl shadow-md min-h-[400px]"><canvas id="chart2"></canvas></div>
-                <div class="mt-6 bg-amber-50 p-6 rounded-xl border border-amber-200">
-                    <h3 class="text-xl font-bold text-slate-700 mb-4">💭 What Pattern Do You See? <span class="glossary-link" onclick="showGlossaryModal('correlation')">[?]</span></h3>
-                    <div class="flex flex-col sm:flex-row gap-4">
-                        <button onclick="selectPattern('positive')" class="w-full text-left p-4 bg-white rounded-lg border-2 hover:border-green-500 hover:bg-green-50">📈 They go up together (Positive)</button>
-                        <button onclick="selectPattern('negative')" class="w-full text-left p-4 bg-white rounded-lg border-2 hover:border-red-500 hover:bg-red-50">📉 One goes up, the other goes down (Negative)</button>
-                        <button onclick="selectPattern('none')" class="w-full text-left p-4 bg-white rounded-lg border-2 hover:border-slate-500 hover:bg-slate-50">🤷 No clear pattern</button>
-                    </div>
-                </div>`;
-        }
-        function generateLevel3HTML() {
-            return `
-                <div class="bg-purple-50 border-l-4 border-purple-500 text-purple-800 p-4 rounded-r-lg mb-6">
-                    <h3 class="font-bold text-xl mb-1">🔍 Question Creator!</h3>
-                    <p>Great data detectives ask great questions. Use the data visualizations below to create a question that would challenge your classmates to think deeply.</p>
-                </div>
-                 <div class="bg-slate-50 p-6 rounded-xl border border-slate-200">
-                    <h3 class="text-xl font-bold text-slate-700 mb-4">Explore Learning & Group Styles</h3>
-                    <div class="flex flex-col sm:flex-row gap-4 items-center">
-                        <select id="exploreType" class="w-full sm:w-auto flex-grow p-3 border border-slate-300 rounded-lg">
-                            <option value="learning_style">How Students Learn Best</option>
-                            <option value="group_role">Preferred Group Work Role</option>
-                        </select>
-                        <button onclick="exploreForQuestions()" class="w-full sm:w-auto bg-indigo-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-indigo-700">Show Data</button>
-                    </div>
-                </div>
-                <div class="mt-6 bg-white p-4 rounded-xl shadow-md min-h-[400px]"><canvas id="chart3"></canvas></div>
-                <div class="mt-6 bg-cyan-50 p-6 rounded-xl border border-cyan-200">
-                    <h3 class="text-xl font-bold text-slate-700 mb-4">✏️ Build Your Question</h3>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
-                        <button onclick="useTemplate('calculate')" class="text-left p-3 bg-white rounded-lg border-2 hover:border-indigo-500">🧮 "What percentage of students..."</button>
-                        <button onclick="useTemplate('compare')" class="text-left p-3 bg-white rounded-lg border-2 hover:border-indigo-500">⚖️ "Which group has a higher score in..."</button>
-                        <button onclick="useTemplate('predict')" class="text-left p-3 bg-white rounded-lg border-2 hover:border-indigo-500">🔮 "If we surveyed 100 more students..."</button>
-                        <button onclick="useTemplate('explain')" class="text-left p-3 bg-white rounded-lg border-2 hover:border-indigo-500">� "Why do you think..."</button>
-                    </div>
-                    <textarea id="customQuestion" rows="3" class="w-full p-3 border border-slate-300 rounded-lg" placeholder="Write your question here..."></textarea>
-                    <button onclick="submitQuestion()" class="mt-4 w-full sm:w-auto bg-indigo-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-indigo-700">Submit Question</button>
-                </div>`;
-        }
-        function generateLevel4HTML() {
-            return `
-                <div class="bg-red-50 border-l-4 border-red-500 text-red-800 p-4 rounded-r-lg mb-6">
-                    <h3 class="font-bold text-xl mb-1">💡 Discovery Lab!</h3>
-                    <p>You're ready to make your own discoveries! Build custom graphs to find hidden patterns and insights in the data.</p>
-                </div>
-                <div class="bg-slate-50 p-6 rounded-xl border border-slate-200">
-                    <h3 class="text-xl font-bold text-slate-700 mb-4">Graph Builder</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-center">
-                        <select id="xAxis" class="w-full p-3 border border-slate-300 rounded-lg"></select>
-                        <select id="yAxis" class="w-full p-3 border border-slate-300 rounded-lg"></select>
-                        <select id="graphType" class="w-full p-3 border border-slate-300 rounded-lg">
-                            <option value="scatter">Scatter Plot</option>
-                            <option value="bar">Bar Chart</option>
-                            <option value="line">Line Graph</option>
-                        </select>
-                        <button onclick="buildCustomGraph()" class="w-full bg-indigo-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-indigo-700">Build Graph</button>
-                    </div>
-                </div>
-                <div class="mt-6 bg-white p-4 rounded-xl shadow-md min-h-[400px]"><canvas id="chart4"></canvas></div>
-                <div class="mt-6 bg-emerald-50 p-6 rounded-xl border border-emerald-200">
-                    <h3 class="text-xl font-bold text-slate-700 mb-4">📝 Document Your Discovery</h3>
-                    <textarea id="discoveryText" rows="4" class="w-full p-3 border border-slate-300 rounded-lg" placeholder="What interesting pattern did you discover? Why do you think this pattern exists?"></textarea>
-                    <button onclick="saveDiscovery()" class="mt-4 w-full sm:w-auto bg-indigo-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-indigo-700">Save Discovery</button>
-                </div>`;
-        }
-        function generateLevel5HTML() {
-            return `
-                <div class="bg-yellow-50 border-l-4 border-yellow-500 text-yellow-800 p-4 rounded-r-lg mb-6">
-                    <h3 class="font-bold text-xl mb-1">🚀 Challenge Mode!</h3>
-                    <p>Use your data detective skills to answer the challenge below. Use the Graph Builder to find the evidence!</p>
-                </div>
-                <div id="challengeContainer" class="bg-slate-800 text-white p-6 rounded-xl text-center">
-                    <h3 class="text-2xl font-bold mb-2" id="challengeTitle">Challenge #1</h3>
-                    <p class="text-lg text-slate-300" id="challengeQuestion">Which learning style reports the highest average "Sense of Wonder"?</p>
-                    <button onclick="startChallenge()" class="mt-4 bg-amber-500 text-slate-900 font-bold py-2 px-6 rounded-lg hover:bg-amber-400">Get a New Challenge</button>
-                </div>
-                 <div class="mt-6 bg-slate-50 p-6 rounded-xl border border-slate-200">
-                    <h3 class="text-xl font-bold text-slate-700 mb-4">Challenge Graph Builder</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-center">
-                        <select id="challengeXAxis" class="w-full p-3 border border-slate-300 rounded-lg"></select>
-                        <select id="challengeYAxis" class="w-full p-3 border border-slate-300 rounded-lg"></select>
-                        <select id="challengeGraphType" class="w-full p-3 border border-slate-300 rounded-lg">
-                            <option value="bar">Bar Chart</option>
-                            <option value="scatter">Scatter Plot</option>
-                            <option value="line">Line Graph</option>
-                        </select>
-                        <button onclick="checkChallengeAnswer()" class="w-full bg-green-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-green-700">Check Answer</button>
-                    </div>
-                </div>
-                <div class="mt-6 bg-white p-4 rounded-xl shadow-md min-h-[400px]"><canvas id="chart5"></canvas></div>`;
-        }
-        function generateModalHTML(id, icon, title, text) {
-            return `<div class="modal-content text-center">
-                        <div class="text-6xl mb-4">${icon}</div>
-                        <h2 class="text-2xl font-bold text-slate-800 mb-2">${title}</h2>
-                        <p class="text-slate-600 mb-6">${text}</p>
-                        <button onclick="closeModal('${id}')" class="bg-indigo-600 text-white font-semibold py-2 px-6 rounded-lg hover:bg-indigo-700">OK</button>
-                    </div>`;
-        }
-        function generateHelpModalHTML() {
-            return `<div class="modal-content">
-                         <h2 class="text-2xl font-bold text-slate-800 mb-4">How to Play</h2>
-                         <div class="space-y-4 text-slate-600">
-                            <p><strong>Level 1:</strong> Get familiar with the data by visualizing different wellness areas.</p>
-                            <p><strong>Level 2:</strong> Compare two different areas to find relationships and patterns.</p>
-                            <p><strong>Level 3:</strong> Use the data to formulate insightful questions.</p>
-                            <p><strong>Level 4:</strong> Build your own custom graphs to make unique discoveries.</p>
-                            <p><strong>Level 5:</strong> Put your skills to the test in challenge mode!</p>
-                         </div>
-                         <div class="mt-6 text-right"><button onclick="closeModal('helpModal')" class="bg-indigo-600 text-white font-semibold py-2 px-6 rounded-lg">Got it!</button></div>
-                    </div>`;
-        }
-        function generateGlossaryModalHTML() {
-            return `<div class="modal-content">
-                         <h2 class="text-2xl font-bold text-slate-800 mb-4">📖 Glossary</h2>
-                         <div class="space-y-4 text-slate-600 max-h-[60vh] overflow-y-auto">
-                            <div><strong>Correlation:</strong> A measure of how closely two things are related. A positive correlation means as one goes up, the other goes up. A negative correlation means as one goes up, the other goes down.</div>
-                            <div><strong>Scatter Plot:</strong> A graph that uses dots to show the relationship between two variables. It's great for spotting correlations.</div>
-                            <div><strong>Bar Chart:</strong> A graph that uses bars to compare the average values of different categories.</div>
-                            <div><strong>X-Axis:</strong> The horizontal line at the bottom of a graph. It shows the independent variable, or what you are changing/comparing.</div>
-                            <div><strong>Y-Axis:</strong> The vertical line on the side of a graph. It shows the dependent variable, or what you are measuring.</div>
-                         </div>
-                         <div class="mt-6 text-right"><button onclick="closeModal('glossaryModal')" class="bg-indigo-600 text-white font-semibold py-2 px-6 rounded-lg">Close</button></div>
-                    </div>`;
-        }
     </script>
 </body>
 </html>
-�
